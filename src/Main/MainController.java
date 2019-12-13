@@ -15,8 +15,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,24 +40,39 @@ public class MainController implements Runnable {
         view.getAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                String todo = view.getTodo().getText();
-                
+                try {
+                    String todoName = view.getTodo().getText();
+                    int time = Integer.parseInt(view.getTime().getText());
+                    cal.add(Calendar.HOUR_OF_DAY, time);
+                    
+                    Todo todo = new Todo(todoName, cal.getTime());
+                    todos.add(todo);
+                    System.out.println(todos.get(todos.size() - 1).time);
+                    simpanObject(todos);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         });
+        
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            bacaObject();
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static String getTime(Calendar cal) {
         return "" + cal.get(Calendar.HOUR_OF_DAY) + ":"
                 + (cal.get(Calendar.MINUTE)) + ":" + cal.get(Calendar.SECOND);
     }
-    
-    
 
     public void simpanObject(List<Todo> todos) throws
             FileNotFoundException, IOException {
