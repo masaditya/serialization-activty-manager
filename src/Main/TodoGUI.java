@@ -14,6 +14,9 @@ import javax.swing.BorderFactory;
  */
 public class TodoGUI extends javax.swing.JFrame {
 
+    MainController controller;
+    Thread t;
+
     /**
      * Creates new form LandingPage
      */
