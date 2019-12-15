@@ -29,6 +29,10 @@ public class TodoGUI extends javax.swing.JFrame {
         txtWaktu.setBorder(BorderFactory.createCompoundBorder(
                 txtWaktu.getBorder(),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        
+        SimpleDateFormat simpleTime = new SimpleDateFormat("H:mm:ss");
+        t = new Thread(new MainController(this));
+        t.start();
     }
 
     /**
