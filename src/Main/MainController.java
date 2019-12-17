@@ -27,17 +27,17 @@ import java.util.logging.Logger;
  */
 public class MainController implements Runnable {
 
-    MainGui view;
+    TodoGUI view;
     SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy");
     Calendar cal = Calendar.getInstance();
     public static String filename = "todos.o";
 
     List<Todo> todos = new ArrayList<Todo>();
 
-    MainController(MainGui view) {
+    MainController(TodoGUI view) {
         this.view = view;
 
-        view.getAdd().addActionListener(new ActionListener() {
+        view.getButtonAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {

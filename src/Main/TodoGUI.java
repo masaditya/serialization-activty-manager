@@ -6,7 +6,11 @@
 package Main;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -22,17 +26,19 @@ public class TodoGUI extends javax.swing.JFrame {
      */
     public TodoGUI() {
         initComponents();
-        jPanel2.setFocusable(true);
-        txtKegiatan.setBorder(BorderFactory.createCompoundBorder(
-                txtKegiatan.getBorder(),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        txtWaktu.setBorder(BorderFactory.createCompoundBorder(
-                txtWaktu.getBorder(),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         
         SimpleDateFormat simpleTime = new SimpleDateFormat("H:mm:ss");
         t = new Thread(new MainController(this));
         t.start();
+        
+        jPanel2.setFocusable(true);
+        todo.setBorder(BorderFactory.createCompoundBorder(
+                todo.getBorder(),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        time.setBorder(BorderFactory.createCompoundBorder(
+                time.getBorder(),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        
     }
 
     /**
@@ -47,14 +53,14 @@ public class TodoGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txtKegiatan = new javax.swing.JTextField();
-        txtWaktu = new javax.swing.JTextField();
+        todo = new javax.swing.JTextField();
+        time = new javax.swing.JTextField();
         buttonCancel = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        todolistPane = new javax.swing.JTextPane();
+        todoPane = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        waktuPane = new javax.swing.JTextPane();
+        timePane = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -85,44 +91,44 @@ public class TodoGUI extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        txtKegiatan.setBackground(new java.awt.Color(204, 204, 204));
-        txtKegiatan.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtKegiatan.setForeground(new java.awt.Color(255, 255, 255));
-        txtKegiatan.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtKegiatan.setText("Masukkan Kegiatan");
-        txtKegiatan.setToolTipText("");
-        txtKegiatan.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        txtKegiatan.setMargin(new java.awt.Insets(0, 100, 0, 0));
-        txtKegiatan.addFocusListener(new java.awt.event.FocusAdapter() {
+        todo.setBackground(new java.awt.Color(204, 204, 204));
+        todo.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        todo.setForeground(new java.awt.Color(255, 255, 255));
+        todo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        todo.setText("Masukkan Kegiatan");
+        todo.setToolTipText("");
+        todo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        todo.setMargin(new java.awt.Insets(0, 100, 0, 0));
+        todo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtKegiatanFocusGained(evt);
+                todoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtKegiatanFocusLost(evt);
+                todoFocusLost(evt);
             }
         });
-        txtKegiatan.addActionListener(new java.awt.event.ActionListener() {
+        todo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKegiatanActionPerformed(evt);
+                todoActionPerformed(evt);
             }
         });
 
-        txtWaktu.setBackground(new java.awt.Color(204, 204, 204));
-        txtWaktu.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        txtWaktu.setForeground(new java.awt.Color(255, 255, 255));
-        txtWaktu.setText("Masukkan Waktu Kegiatan");
-        txtWaktu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        txtWaktu.addFocusListener(new java.awt.event.FocusAdapter() {
+        time.setBackground(new java.awt.Color(204, 204, 204));
+        time.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        time.setForeground(new java.awt.Color(255, 255, 255));
+        time.setText("Masukkan Waktu Kegiatan");
+        time.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        time.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtWaktuFocusGained(evt);
+                timeFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtWaktuFocusLost(evt);
+                timeFocusLost(evt);
             }
         });
-        txtWaktu.addActionListener(new java.awt.event.ActionListener() {
+        time.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtWaktuActionPerformed(evt);
+                timeActionPerformed(evt);
             }
         });
 
@@ -141,9 +147,9 @@ public class TodoGUI extends javax.swing.JFrame {
         buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
         buttonAdd.setText("ADD");
 
-        jScrollPane1.setViewportView(todolistPane);
+        jScrollPane1.setViewportView(todoPane);
 
-        jScrollPane2.setViewportView(waktuPane);
+        jScrollPane2.setViewportView(timePane);
 
         jLabel2.setText("To Do List");
 
@@ -154,22 +160,19 @@ public class TodoGUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtKegiatan, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(time, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                        .addComponent(todo, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
@@ -185,9 +188,9 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addGap(86, 86, 86))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(txtKegiatan, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(todo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,48 +221,48 @@ public class TodoGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtKegiatanFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKegiatanFocusGained
+    private void todoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_todoFocusGained
         // TODO add your handling code here:
-        if (txtKegiatan.getText().equals("Masukkan Kegiatan")) {
-            txtKegiatan.setText("");
+        if (todo.getText().equals("Masukkan Kegiatan")) {
+            todo.setText("");
         }
-        txtKegiatan.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_txtKegiatanFocusGained
+        todo.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_todoFocusGained
 
-    private void txtKegiatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKegiatanActionPerformed
+    private void todoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtKegiatanActionPerformed
+    }//GEN-LAST:event_todoActionPerformed
 
-    private void txtKegiatanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKegiatanFocusLost
+    private void todoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_todoFocusLost
         // TODO add your handling code here:
-        if (txtKegiatan.getText().equals("")) {
-            txtKegiatan.setText("Masukkan Kegiatan");
+        if (todo.getText().equals("")) {
+            todo.setText("Masukkan Kegiatan");
         }
-        txtKegiatan.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_txtKegiatanFocusLost
+        todo.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_todoFocusLost
 
-    private void txtWaktuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtWaktuFocusGained
-        if (txtWaktu.getText().equals("Masukkan Waktu Kegiatan")) {
-            txtWaktu.setText("");
+    private void timeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_timeFocusGained
+        if (time.getText().equals("Masukkan Waktu Kegiatan")) {
+            time.setText("");
         }
-        txtWaktu.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_txtWaktuFocusGained
+        time.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_timeFocusGained
 
-    private void txtWaktuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtWaktuFocusLost
-        if (txtWaktu.getText().equals("")) {
-            txtWaktu.setText("Masukkan Waktu Kegiatan");
+    private void timeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_timeFocusLost
+        if (time.getText().equals("")) {
+            time.setText("Masukkan Waktu Kegiatan");
         }
-        txtWaktu.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_txtWaktuFocusLost
+        time.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_timeFocusLost
 
-    private void txtWaktuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWaktuActionPerformed
+    private void timeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtWaktuActionPerformed
+    }//GEN-LAST:event_timeActionPerformed
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         // TODO add your handling code here:
-        txtKegiatan.setText("");
-        txtWaktu.setText("");
+        todo.setText("");
+        time.setText("");
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     /**
@@ -298,6 +301,28 @@ public class TodoGUI extends javax.swing.JFrame {
         });
     }
 
+    public JButton getButtonAdd() {
+        return buttonAdd;
+    }
+
+    public JTextField getTime() {
+        return time;
+    }
+
+    public JTextPane getTimePane() {
+        return timePane;
+    }
+    
+    public JTextField getTodo() {
+        return todo;
+    }
+
+    public JTextPane getTodoPane() {
+        return todoPane;
+    }
+    
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonCancel;
@@ -308,9 +333,9 @@ public class TodoGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane todolistPane;
-    private javax.swing.JTextField txtKegiatan;
-    private javax.swing.JTextField txtWaktu;
-    private javax.swing.JTextPane waktuPane;
+    private javax.swing.JTextField time;
+    private javax.swing.JTextPane timePane;
+    private javax.swing.JTextField todo;
+    private javax.swing.JTextPane todoPane;
     // End of variables declaration//GEN-END:variables
 }

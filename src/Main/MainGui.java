@@ -24,9 +24,9 @@ public class MainGui extends javax.swing.JFrame {
      */
     public MainGui() {
         initComponents();
-        SimpleDateFormat simpleTime = new SimpleDateFormat("H:mm:ss");
-        t = new Thread(new MainController(this));
-        t.start();
+//        SimpleDateFormat simpleTime = new SimpleDateFormat("H:mm:ss");
+//        t = new Thread(new MainController(this));
+//        t.start();
     }
 
     /**
