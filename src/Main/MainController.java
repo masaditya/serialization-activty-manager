@@ -33,14 +33,33 @@ public class MainController implements Runnable {
     public static String filename = "todos.o";
 
     List<Todo> todos = new ArrayList<Todo>();
+    List<String> timeList = new ArrayList<String>();
 
     MainController(MainGui view) {
         this.view = view;
 
+//        view.getAdd().addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//                try {
+//                    String todoName = view.getTodo().getText();
+//                    int time = Integer.parseInt(view.getTime().getText());
+//                    cal.add(Calendar.HOUR_OF_DAY, time);
+//                    
+//                    Todo todo = new Todo(todoName, cal.getTime());
+//                    todos.add(todo);
+//                    System.out.println(todos.get(todos.size() - 1).time);
+//                    simpanObject(todos);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//
+//        });
         view.getAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                try {
+//                try {
                     String todoName = view.getTodo().getText();
                     int time = Integer.parseInt(view.getTime().getText());
                     cal.add(Calendar.HOUR_OF_DAY, time);
@@ -48,25 +67,27 @@ public class MainController implements Runnable {
                     Todo todo = new Todo(todoName, cal.getTime());
                     todos.add(todo);
                     System.out.println(todos.get(todos.size() - 1).time);
-                    simpanObject(todos);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                    bacaObject(todos);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
 
         });
-        
     }
 
     @Override
     public void run() {
-        try {
-            bacaObject();
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
+//        try {
+//            bacaObject();
+//        } catch (IOException ex) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public static String getTime(Calendar cal) {
@@ -81,15 +102,18 @@ public class MainController implements Runnable {
         ObjectOutputStream oout = new ObjectOutputStream(fout);
         oout.writeObject(todos);
         System.out.println("Object berhasil disimpan.");
+//        this.todos = (List<Todo>) fout.writeObject();
     }
 
-    public void bacaObject() throws FileNotFoundException,
+    public void bacaObject(List<Todo> todos) throws FileNotFoundException,
             IOException, ClassNotFoundException {
         ObjectInputStream ois;
         ois = new ObjectInputStream(new FileInputStream(filename));
         System.out.println("Object dibaca.");
 //        this.listMobil.add((Mobil) ois.readObject())
         this.todos = (List<Todo>) ois.readObject();
+        
+        
 
     }
 
