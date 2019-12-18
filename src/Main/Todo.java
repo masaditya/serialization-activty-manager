@@ -11,13 +11,17 @@ import java.util.Date;
  *
  * @author adit
  */
-public class Todo {
-    
+public class Todo implements java.io.Serializable {
+
     String todo;
     Date time;
     boolean status;
-    
-    Todo(String todo, Date time){
+
+    Todo() {
+
+    }
+
+    Todo(String todo, Date time) {
         this.todo = todo;
         this.time = time;
         this.status = status;
@@ -46,8 +50,5 @@ public class Todo {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-    
-    
+
 }

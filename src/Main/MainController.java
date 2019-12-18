@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,38 +41,42 @@ public class MainController implements Runnable {
         view.getButtonAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    String todoName = view.getTodo().getText();
-                    int time = Integer.parseInt(view.getTime().getText());
-                    cal.add(Calendar.HOUR_OF_DAY, time);
-                    
-                    Todo todo = new Todo(todoName, cal.getTime());
-                    todos.add(todo);
-                    System.out.println(todos.get(todos.size() - 1).time);
-                    simpanObject(todos);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                String todoName = view.getTodo().getText();
+                Date date = (Date) view.getTime().getValue();
+
+                System.out.println(todoName);
+                System.out.println(date);
+
+                Todo todo = new Todo(todoName, date);
+                todos.add(todo);
+
+                updateTodoPane();
+
             }
 
         });
-        
+
     }
 
     @Override
     public void run() {
-        try {
-            bacaObject();
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            bacaObject();
+//        } catch (IOException ex) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public static String getTime(Calendar cal) {
         return "" + cal.get(Calendar.HOUR_OF_DAY) + ":"
                 + (cal.get(Calendar.MINUTE)) + ":" + cal.get(Calendar.SECOND);
+    }
+
+    void updateTodoPane() {
+        this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + todos.get(todos.size() - 1).getTime());
+        this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + todos.get(todos.size() - 1).getTodo());
     }
 
     public void simpanObject(List<Todo> todos) throws
