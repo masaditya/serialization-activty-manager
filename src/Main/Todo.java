@@ -24,7 +24,7 @@ public class Todo implements java.io.Serializable {
     Todo(String todo, Date time) {
         this.todo = todo;
         this.time = time;
-        this.status = status;
+        this.status = false;
     }
 
     public String getTodo() {

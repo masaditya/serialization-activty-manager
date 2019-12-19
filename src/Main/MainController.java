@@ -28,18 +28,18 @@ import java.util.logging.Logger;
  * @author adit
  */
 public class MainController implements Runnable {
-
+    
     TodoGUI view;
-    SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy");
+    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
     Calendar cal = Calendar.getInstance();
     public static String filename = "todos.out";
-
+    
     List<Todo> listTodos;
-
+    
     MainController(TodoGUI view) {
         this.view = view;
         this.listTodos = new ArrayList<Todo>();
-
+        
         view.getButtonAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -48,17 +48,17 @@ public class MainController implements Runnable {
                 
                 System.out.println(todoName);
                 System.out.println(date);
-
+                
                 Todo todo = new Todo(todoName, date);
                 listTodos.add(todo);
                 System.out.println("todo yang sudah di add : " + todo.getTodo());
-
+                
                 updateTodoPane();
                 view.getTodo().setText("");
-
+                
             }
         });
-
+        
         view.getButtonSave().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -71,37 +71,57 @@ public class MainController implements Runnable {
             }
         });
     }
-
+    
     @Override
     public void run() {
         try {
+            view.getTodo().setText("");
             bacaObject();
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        while (true) {
+            cal.add(Calendar.SECOND, +1);
+            view.getCounter().setText(formatter.format(cal.getTime()));
+            
+            for (int i = 0; i < listTodos.size(); i++) {
+                if (formatter.format(listTodos.get(i).getTime()).equals(formatter.format(cal.getTime()))) {
+                    listTodos.get(i).setStatus(true);
+                    updateTodoPane();
+                }
+            }
+            
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-
+    
     public static String getTime(Calendar cal) {
         return "" + cal.get(Calendar.HOUR_OF_DAY) + ":"
                 + (cal.get(Calendar.MINUTE)) + ":" + cal.get(Calendar.SECOND);
     }
-
+    
     void updateTodoPane() {
-        for (int i = 0; i < listTodos.size() - 1; i++) {
-            
+        clearTodoPane();
+        for (int i = 0; i < listTodos.size(); i++) {
+            Todo todo = listTodos.get(i);
             Date tmp = listTodos.get(i).getTime();
-            this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + tmp);
-            this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + listTodos.get(i).getTodo());
+            this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + formatter.format(tmp));
+            this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + todo.getTodo() + " (" + todo.isStatus()+")");
         }
     }
-
+    
     void clearTodoPane() {
         this.view.getTodoPane().setText("");
         this.view.getTimePane().setText("");
     }
-
+    
     public void Simpan(List<Todo> todo) throws FileNotFoundException, IOException {
         System.out.println("Saving list");
         FileOutputStream fout = new FileOutputStream(filename);
@@ -111,16 +131,16 @@ public class MainController implements Runnable {
         fout.close();
         clearTodoPane();
     }
-
+    
     public void bacaObject() throws FileNotFoundException,
             IOException, ClassNotFoundException {
         ObjectInputStream ois;
         ois = new ObjectInputStream(new FileInputStream(filename));
         System.out.println("Object dibaca.");
-
+        
         this.listTodos = (List<Todo>) ois.readObject();
         updateTodoPane();
-
+        
     }
-
+    
 }
