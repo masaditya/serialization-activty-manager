@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ public class MainController implements Runnable {
 
                 Todo todo = new Todo(todoName, date);
                 listTodos.add(todo);
-                System.out.println(todo.getTodo());
+                System.out.println("todo yang sudah di add : " + todo.getTodo());
 
 //                view.getTodo().setText("");
                 updateTodoPane();
@@ -78,7 +79,9 @@ public class MainController implements Runnable {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
+                    System.out.println("button BACA di klik");
                     ArrayList listTodos = Baca();
+                    bacaFileTodoPane();
 //            System.out.println(listMobil.get(0));
 //            controller.addElement(mobil);
 //                    updateTodoPane();
@@ -113,8 +116,17 @@ public class MainController implements Runnable {
         this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTime());
         this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTodo());
     }
-    
-    void clearTodoPane(){
+
+    void bacaFileTodoPane() {
+
+// Create an instance of SimpleDateFormat used for formatting 
+// the string representation of date according to the chosen pattern
+        
+        this.view.getTodoPane().setText(todo.getTodo());
+        this.view.getTimePane().setText(formatter.format(todo.getTime()));
+    }
+
+    void clearTodoPane() {
         this.view.getTodoPane().setText("");
         this.view.getTimePane().setText("");
     }
@@ -130,7 +142,7 @@ public class MainController implements Runnable {
         // Construct an object output stream
         ObjectOutputStream oout = new ObjectOutputStream(fout);
         // Write the object to the stream
-        
+
         oout.writeObject(todo);
         System.out.println("Object berhasil disimpan.");
         fout.close();
@@ -144,15 +156,17 @@ public class MainController implements Runnable {
         FileInputStream fin = new FileInputStream(filename);
         ObjectInputStream in = new ObjectInputStream(fin);
         Object obj = in.readObject();
+        System.out.println("Object dibaca.");
         return (ArrayList<Todo>) obj;
     }
 
-    public void bacaObject() throws FileNotFoundException,
+    public static Todo bacaObject() throws FileNotFoundException,
             IOException, ClassNotFoundException {
         ObjectInputStream ois;
         ois = new ObjectInputStream(new FileInputStream(filename));
         System.out.println("Object dibaca.");
 //        this.todos = (List<Todo>) ois.readObject();
+        return (Todo) ois.readObject();
 
     }
 

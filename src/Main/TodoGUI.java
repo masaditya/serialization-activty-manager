@@ -290,7 +290,7 @@ public class TodoGUI extends javax.swing.JFrame {
 
     private void buttonBacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBacaActionPerformed
         // TODO add your handling code here:
-        System.out.println("button BACA di klik");
+//        System.out.println("button BACA di klik");
 //        try {
 //            controller.simpanObject();
 //        } catch (IOException ex) {
