@@ -31,15 +31,15 @@ public class MainController implements Runnable {
     TodoGUI view;
     SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy");
     Calendar cal = Calendar.getInstance();
-    public static String filename = "todos.o";
+    public static String filename = "todos.out";
 
-    List<Todo> todos = new ArrayList<Todo>();
+    private final List<Todo> listTodos;
     Todo todo = new Todo();
 //    private final List<Todo> todos;
 
     MainController(TodoGUI view) {
         this.view = view;
-//        this.todos = new ArrayList<Todo>();
+        this.listTodos = new ArrayList<Todo>();
 
         view.getButtonAdd().addActionListener(new ActionListener() {
             @Override
@@ -51,7 +51,7 @@ public class MainController implements Runnable {
                 System.out.println(date);
 
                 Todo todo = new Todo(todoName, date);
-                todos.add(todo);
+                listTodos.add(todo);
                 System.out.println(todo.getTodo());
 
 //                view.getTodo().setText("");
@@ -68,6 +68,23 @@ public class MainController implements Runnable {
                 try {
                     simpanObject();
                 } catch (IOException ex) {
+                    Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+
+        view.getButtonBaca().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    ArrayList listTodos = Baca();
+//            System.out.println(listMobil.get(0));
+//            controller.addElement(mobil);
+//                    updateTodoPane();
+                } catch (IOException ex) {
+                    Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -93,31 +110,34 @@ public class MainController implements Runnable {
     }
 
     void updateTodoPane() {
-        this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + todos.get(todos.size() - 1).getTime());
-        this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + todos.get(todos.size() - 1).getTodo());
+        this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTime());
+        this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTodo());
+    }
+    
+    void clearTodoPane(){
+        this.view.getTodoPane().setText("");
+        this.view.getTimePane().setText("");
     }
 
     public void simpanObject() throws IOException {
-//        FileOutputStream fout;
-//        fout = new FileOutputStream(filename);
-//        ObjectOutputStream oout = new ObjectOutputStream(fout);
-//        oout.writeObject(todos);
-//        System.out.println("Object berhasil disimpan.");
-        Simpan(todo);
+        Simpan(listTodos);
     }
 
-    public void Simpan(Todo todo) throws FileNotFoundException, IOException {
+    public void Simpan(List<Todo> todo) throws FileNotFoundException, IOException {
         System.out.println("Saving list");
 
         FileOutputStream fout = new FileOutputStream(filename);
         // Construct an object output stream
         ObjectOutputStream oout = new ObjectOutputStream(fout);
         // Write the object to the stream
+        
         oout.writeObject(todo);
         System.out.println("Object berhasil disimpan.");
         fout.close();
+        //mengosongkan scroll pane
+        clearTodoPane();
     }
-    
+
     public ArrayList<Todo> Baca() throws FileNotFoundException, IOException, ClassNotFoundException {
         System.out.println("membaca list kegiatan");
 

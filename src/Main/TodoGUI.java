@@ -341,7 +341,10 @@ public class TodoGUI extends javax.swing.JFrame {
     public JButton getButtonSave() {
         return buttonSave;
     }
-    
+
+    public JButton getButtonBaca() {
+        return buttonBaca;
+    }
 
     public JSpinner getTime() {
         return time;

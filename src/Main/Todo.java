@@ -51,4 +51,12 @@ public class Todo implements java.io.Serializable {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Todo <code:" + todo + ", time: " + time + ", status: " + status + ">";
+        //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+
 }
