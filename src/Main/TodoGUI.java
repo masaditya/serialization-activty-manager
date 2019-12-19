@@ -64,7 +64,7 @@ public class TodoGUI extends javax.swing.JFrame {
         buttonCancel = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
-        buttonSimpan = new javax.swing.JButton();
+        buttonBaca = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         todoPane = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -155,10 +155,10 @@ public class TodoGUI extends javax.swing.JFrame {
             }
         });
 
-        buttonSimpan.setText("Simpan");
-        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
+        buttonBaca.setText("BACA");
+        buttonBaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSimpanActionPerformed(evt);
+                buttonBacaActionPerformed(evt);
             }
         });
 
@@ -198,7 +198,7 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(buttonSimpan)))
+                        .addComponent(buttonBaca)))
                 .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
@@ -219,7 +219,7 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonSimpan))
+                            .addComponent(buttonBaca))
                         .addGap(10, 10, 10)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,23 +285,18 @@ public class TodoGUI extends javax.swing.JFrame {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         // TODO add your handling code here:
-        System.out.println("button save di klik");
-        try {
-            controller.simpanObject();
-        } catch (IOException ex) {
-            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_buttonSaveActionPerformed
 
-    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+    private void buttonBacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBacaActionPerformed
         // TODO add your handling code here:
-        System.out.println("button save di klik");
-        try {
-            controller.simpanObject();
-        } catch (IOException ex) {
-            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonSimpanActionPerformed
+        System.out.println("button BACA di klik");
+//        try {
+//            controller.simpanObject();
+//        } catch (IOException ex) {
+//            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_buttonBacaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +338,11 @@ public class TodoGUI extends javax.swing.JFrame {
         return buttonAdd;
     }
 
+    public JButton getButtonSave() {
+        return buttonSave;
+    }
+    
+
     public JSpinner getTime() {
         return time;
     }    
@@ -363,9 +363,9 @@ public class TodoGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonBaca;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
-    private javax.swing.JButton buttonSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

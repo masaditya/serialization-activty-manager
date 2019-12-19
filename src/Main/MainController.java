@@ -34,6 +34,7 @@ public class MainController implements Runnable {
     public static String filename = "todos.o";
 
     List<Todo> todos = new ArrayList<Todo>();
+    Todo todo = new Todo();
 //    private final List<Todo> todos;
 
     MainController(TodoGUI view) {
@@ -51,7 +52,7 @@ public class MainController implements Runnable {
 
                 Todo todo = new Todo(todoName, date);
                 todos.add(todo);
-                System.out.println(todos.get(0));
+                System.out.println(todo.getTodo());
 
 //                view.getTodo().setText("");
                 updateTodoPane();
@@ -59,7 +60,19 @@ public class MainController implements Runnable {
 
             }
         });
-        
+
+        view.getButtonSave().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                System.out.println("button save di klik");
+                try {
+                    simpanObject();
+                } catch (IOException ex) {
+                    Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
 
     }
 
@@ -90,19 +103,28 @@ public class MainController implements Runnable {
 //        ObjectOutputStream oout = new ObjectOutputStream(fout);
 //        oout.writeObject(todos);
 //        System.out.println("Object berhasil disimpan.");
-            Simpan(todos);
+        Simpan(todo);
     }
-    
-    public void Simpan(List<Todo> todos) throws FileNotFoundException, IOException {
+
+    public void Simpan(Todo todo) throws FileNotFoundException, IOException {
         System.out.println("Saving list");
 
         FileOutputStream fout = new FileOutputStream(filename);
         // Construct an object output stream
         ObjectOutputStream oout = new ObjectOutputStream(fout);
         // Write the object to the stream
-        oout.writeObject(todos);
+        oout.writeObject(todo);
         System.out.println("Object berhasil disimpan.");
         fout.close();
+    }
+    
+    public ArrayList<Todo> Baca() throws FileNotFoundException, IOException, ClassNotFoundException {
+        System.out.println("membaca list kegiatan");
+
+        FileInputStream fin = new FileInputStream(filename);
+        ObjectInputStream in = new ObjectInputStream(fin);
+        Object obj = in.readObject();
+        return (ArrayList<Todo>) obj;
     }
 
     public void bacaObject() throws FileNotFoundException,
