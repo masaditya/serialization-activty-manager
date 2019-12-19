@@ -8,6 +8,7 @@ package Main;
 import java.awt.Color;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -34,7 +35,6 @@ public class TodoGUI extends javax.swing.JFrame {
     public TodoGUI() {
         initComponents();
         
-        SimpleDateFormat simpleTime = new SimpleDateFormat("H:mm:ss");
         t = new Thread(new MainController(this));
         t.start();
         
@@ -64,17 +64,19 @@ public class TodoGUI extends javax.swing.JFrame {
         buttonCancel = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
-        buttonBaca = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         todoPane = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         timePane = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        LocalDateTime dateTime = LocalDateTime.now();
+
         Date date = new Date();
         SpinnerDateModel sm =
         new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
         time = new javax.swing.JSpinner(sm);
+        tanggal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,13 +157,6 @@ public class TodoGUI extends javax.swing.JFrame {
             }
         });
 
-        buttonBaca.setText("BACA");
-        buttonBaca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBacaActionPerformed(evt);
-            }
-        });
-
         jScrollPane1.setViewportView(todoPane);
 
         jScrollPane2.setViewportView(timePane);
@@ -171,6 +166,13 @@ public class TodoGUI extends javax.swing.JFrame {
         jLabel3.setText("Waktu");
 
         time.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.HOUR_OF_DAY));
+        time.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                timeStateChanged(evt);
+            }
+        });
+
+        tanggal.setText("label");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,10 +184,12 @@ public class TodoGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                     .addComponent(todo)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,9 +200,7 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonBaca)))
+                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
@@ -209,7 +211,9 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(todo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(time, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(time, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -217,9 +221,7 @@ public class TodoGUI extends javax.swing.JFrame {
                             .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonBaca))
+                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,15 +290,9 @@ public class TodoGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_buttonSaveActionPerformed
 
-    private void buttonBacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBacaActionPerformed
-        // TODO add your handling code here:
-//        System.out.println("button BACA di klik");
-//        try {
-//            controller.simpanObject();
-//        } catch (IOException ex) {
-//            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_buttonBacaActionPerformed
+    private void timeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_timeStateChanged
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_timeStateChanged
 
     /**
      * @param args the command line arguments
@@ -342,9 +338,6 @@ public class TodoGUI extends javax.swing.JFrame {
         return buttonSave;
     }
 
-    public JButton getButtonBaca() {
-        return buttonBaca;
-    }
 
     public JSpinner getTime() {
         return time;
@@ -366,7 +359,6 @@ public class TodoGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
-    private javax.swing.JButton buttonBaca;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
     private javax.swing.JLabel jLabel1;
@@ -376,6 +368,7 @@ public class TodoGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel tanggal;
     private javax.swing.JSpinner time;
     private javax.swing.JTextPane timePane;
     private javax.swing.JTextField todo;

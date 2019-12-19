@@ -34,9 +34,7 @@ public class MainController implements Runnable {
     Calendar cal = Calendar.getInstance();
     public static String filename = "todos.out";
 
-    private final List<Todo> listTodos;
-    Todo todo = new Todo();
-//    private final List<Todo> todos;
+    List<Todo> listTodos;
 
     MainController(TodoGUI view) {
         this.view = view;
@@ -47,7 +45,7 @@ public class MainController implements Runnable {
             public void actionPerformed(ActionEvent ae) {
                 String todoName = view.getTodo().getText();
                 Date date = (Date) view.getTime().getValue();
-
+                
                 System.out.println(todoName);
                 System.out.println(date);
 
@@ -55,7 +53,6 @@ public class MainController implements Runnable {
                 listTodos.add(todo);
                 System.out.println("todo yang sudah di add : " + todo.getTodo());
 
-//                view.getTodo().setText("");
                 updateTodoPane();
                 view.getTodo().setText("");
 
@@ -67,55 +64,23 @@ public class MainController implements Runnable {
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("button save di klik");
                 try {
-                    simpanObject();
+                    Simpan(listTodos);
                 } catch (IOException ex) {
                     Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         });
-
-        view.getButtonBaca().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    System.out.println("button BACA di klik");
-                    ArrayList list = Baca();
-                    String[] listData = new String[4];
-
-                    for (Todo todo : listTodos) {
-                        System.out.println(todo.toString());
-                        listData[0] = todo.getTodo();
-                        listData[1] = formatter.format(todo.getTime());
-//                        tableModel.addRow(listData);
-                    }
-//                    Todo todo2 = new Todo(listData);
-
-                    System.out.println("todo yang sudah di add : " + listData[0]);
-                    bacaFileTodoPane();
-//            System.out.println(listMobil.get(0));
-//            controller.addElement(mobil);
-//                    updateTodoPane();
-                } catch (IOException ex) {
-                    Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        });
-
     }
 
     @Override
     public void run() {
-//        try {
-//            bacaObject();
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            bacaObject();
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static String getTime(Calendar cal) {
@@ -124,16 +89,12 @@ public class MainController implements Runnable {
     }
 
     void updateTodoPane() {
-        this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTime());
-        this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + listTodos.get(listTodos.size() - 1).getTodo());
-    }
-
-    void bacaFileTodoPane() {
-
-// Create an instance of SimpleDateFormat used for formatting 
-// the string representation of date according to the chosen pattern
-        this.view.getTodoPane().setText(todo.getTodo());
-//        this.view.getTimePane().setText(formatter.format(todo.getTime()));
+        for (int i = 0; i < listTodos.size() - 1; i++) {
+            
+            Date tmp = listTodos.get(i).getTime();
+            this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + tmp);
+            this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + listTodos.get(i).getTodo());
+        }
     }
 
     void clearTodoPane() {
@@ -141,42 +102,24 @@ public class MainController implements Runnable {
         this.view.getTimePane().setText("");
     }
 
-    public void simpanObject() throws IOException {
-        Simpan(listTodos);
-    }
-
     public void Simpan(List<Todo> todo) throws FileNotFoundException, IOException {
         System.out.println("Saving list");
-
         FileOutputStream fout = new FileOutputStream(filename);
-        // Construct an object output stream
         ObjectOutputStream oout = new ObjectOutputStream(fout);
-        // Write the object to the stream
-
         oout.writeObject(todo);
         System.out.println("Object berhasil disimpan.");
         fout.close();
-        //mengosongkan scroll pane
         clearTodoPane();
     }
 
-    public ArrayList<Todo> Baca() throws FileNotFoundException, IOException, ClassNotFoundException {
-        System.out.println("membaca list kegiatan");
-
-        FileInputStream fin = new FileInputStream(filename);
-        ObjectInputStream in = new ObjectInputStream(fin);
-        Object obj = in.readObject();
-        System.out.println("Object dibaca.");
-        return (ArrayList<Todo>) obj;
-    }
-
-    public static Todo bacaObject() throws FileNotFoundException,
+    public void bacaObject() throws FileNotFoundException,
             IOException, ClassNotFoundException {
         ObjectInputStream ois;
         ois = new ObjectInputStream(new FileInputStream(filename));
         System.out.println("Object dibaca.");
-//        this.todos = (List<Todo>) ois.readObject();
-        return (Todo) ois.readObject();
+
+        this.listTodos = (List<Todo>) ois.readObject();
+        updateTodoPane();
 
     }
 
