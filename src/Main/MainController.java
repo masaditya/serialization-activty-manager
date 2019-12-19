@@ -34,9 +34,11 @@ public class MainController implements Runnable {
     public static String filename = "todos.o";
 
     List<Todo> todos = new ArrayList<Todo>();
+//    private final List<Todo> todos;
 
     MainController(TodoGUI view) {
         this.view = view;
+//        this.todos = new ArrayList<Todo>();
 
         view.getButtonAdd().addActionListener(new ActionListener() {
             @Override
@@ -49,12 +51,15 @@ public class MainController implements Runnable {
 
                 Todo todo = new Todo(todoName, date);
                 todos.add(todo);
+                System.out.println(todos.get(0));
 
+//                view.getTodo().setText("");
                 updateTodoPane();
+                view.getTodo().setText("");
 
             }
-
         });
+        
 
     }
 
@@ -79,13 +84,25 @@ public class MainController implements Runnable {
         this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + todos.get(todos.size() - 1).getTodo());
     }
 
-    public void simpanObject(List<Todo> todos) throws
-            FileNotFoundException, IOException {
-        FileOutputStream fout;
-        fout = new FileOutputStream(filename);
+    public void simpanObject() throws IOException {
+//        FileOutputStream fout;
+//        fout = new FileOutputStream(filename);
+//        ObjectOutputStream oout = new ObjectOutputStream(fout);
+//        oout.writeObject(todos);
+//        System.out.println("Object berhasil disimpan.");
+            Simpan(todos);
+    }
+    
+    public void Simpan(List<Todo> todos) throws FileNotFoundException, IOException {
+        System.out.println("Saving list");
+
+        FileOutputStream fout = new FileOutputStream(filename);
+        // Construct an object output stream
         ObjectOutputStream oout = new ObjectOutputStream(fout);
+        // Write the object to the stream
         oout.writeObject(todos);
         System.out.println("Object berhasil disimpan.");
+        fout.close();
     }
 
     public void bacaObject() throws FileNotFoundException,
@@ -93,8 +110,7 @@ public class MainController implements Runnable {
         ObjectInputStream ois;
         ois = new ObjectInputStream(new FileInputStream(filename));
         System.out.println("Object dibaca.");
-//        this.listMobil.add((Mobil) ois.readObject())
-        this.todos = (List<Todo>) ois.readObject();
+//        this.todos = (List<Todo>) ois.readObject();
 
     }
 

@@ -6,9 +6,12 @@
 package Main;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
@@ -60,6 +63,8 @@ public class TodoGUI extends javax.swing.JFrame {
         todo = new javax.swing.JTextField();
         buttonCancel = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
+        buttonSave = new javax.swing.JButton();
+        buttonSimpan = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         todoPane = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -70,7 +75,6 @@ public class TodoGUI extends javax.swing.JFrame {
         SpinnerDateModel sm =
         new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
         time = new javax.swing.JSpinner(sm);
-        buttonSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +139,28 @@ public class TodoGUI extends javax.swing.JFrame {
         buttonAdd.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
         buttonAdd.setText("ADD");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
+
+        buttonSave.setBackground(new java.awt.Color(255, 151, 29));
+        buttonSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        buttonSave.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSave.setText("SAVE");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+
+        buttonSimpan.setText("Simpan");
+        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSimpanActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(todoPane);
 
@@ -145,11 +171,6 @@ public class TodoGUI extends javax.swing.JFrame {
         jLabel3.setText("Waktu");
 
         time.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.HOUR_OF_DAY));
-
-        buttonSave.setBackground(new java.awt.Color(255, 151, 29));
-        buttonSave.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        buttonSave.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSave.setText("SAVE");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -165,21 +186,20 @@ public class TodoGUI extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))))
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonSimpan)))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,9 +216,11 @@ public class TodoGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonSimpan))
+                        .addGap(10, 10, 10)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,6 +277,31 @@ public class TodoGUI extends javax.swing.JFrame {
         }
         todo.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_todoFocusGained
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_buttonAddActionPerformed
+
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        // TODO add your handling code here:
+        System.out.println("button save di klik");
+        try {
+            controller.simpanObject();
+        } catch (IOException ex) {
+            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+        // TODO add your handling code here:
+        System.out.println("button save di klik");
+        try {
+            controller.simpanObject();
+        } catch (IOException ex) {
+            Logger.getLogger(TodoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonSimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +365,7 @@ public class TodoGUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
+    private javax.swing.JButton buttonSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
