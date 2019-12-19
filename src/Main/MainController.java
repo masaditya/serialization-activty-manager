@@ -80,7 +80,18 @@ public class MainController implements Runnable {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     System.out.println("button BACA di klik");
-                    ArrayList listTodos = Baca();
+                    ArrayList list = Baca();
+                    String[] listData = new String[4];
+
+                    for (Todo todo : listTodos) {
+                        System.out.println(todo.toString());
+                        listData[0] = todo.getTodo();
+                        listData[1] = formatter.format(todo.getTime());
+//                        tableModel.addRow(listData);
+                    }
+//                    Todo todo2 = new Todo(listData);
+
+                    System.out.println("todo yang sudah di add : " + listData[0]);
                     bacaFileTodoPane();
 //            System.out.println(listMobil.get(0));
 //            controller.addElement(mobil);
@@ -121,9 +132,8 @@ public class MainController implements Runnable {
 
 // Create an instance of SimpleDateFormat used for formatting 
 // the string representation of date according to the chosen pattern
-        
         this.view.getTodoPane().setText(todo.getTodo());
-        this.view.getTimePane().setText(formatter.format(todo.getTime()));
+//        this.view.getTimePane().setText(formatter.format(todo.getTime()));
     }
 
     void clearTodoPane() {
