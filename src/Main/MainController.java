@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +32,7 @@ public class MainController implements Runnable {
 
     TodoGUI view;
     SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+    Date date = new Date();
     Calendar cal = Calendar.getInstance();
     public static String filename = "todos.out";
 
@@ -44,14 +46,25 @@ public class MainController implements Runnable {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 String todoName = view.getTodo().getText();
-                Date date = (Date) view.getTime().getValue();
+                date = (Date) view.getTime().getValue();
+                
+                Calendar cal = Calendar.getInstance();
+                Date dd = new Date();
 
-                System.out.println(todoName);
-                System.out.println(date);
+                int jam = Integer.parseInt(date.toString().substring(11, 13));
+                int menit = Integer.parseInt(date.toString().substring(14, 16));
+                int detik = Integer.parseInt(date.toString().substring(17, 19));
+
+                cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), jam, menit, detik);
+
+                dd.setTime(cal.getTime().getTime());
+
+                System.out.println("cal : " + dd);
 
                 Todo todo = new Todo(todoName, date);
                 listTodos.add(todo);
                 System.out.println("todo yang sudah di add : " + todo.getTodo());
+
 
                 updateTodoPane();
                 view.getTodo().setText("");
@@ -84,13 +97,19 @@ public class MainController implements Runnable {
         }
 
         while (true) {
+            Date date = new Date();
+            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"));
+            cal.setTime(date);
             cal.add(Calendar.SECOND, +1);
             view.getCounter().setText(formatter.format(cal.getTime()));
-            System.out.println(listTodos.get(listTodos.size()-1).getTime());
+            
+            System.out.println("waktu counter -> "+cal.getTime());
+            
+            System.out.println(listTodos.get(listTodos.size() - 1).getTime());
             for (int i = 0; i < listTodos.size(); i++) {
 //                System.out.println("todo time " + listTodos.get(i).getTime());
-                if (listTodos.get(i).getTime().after(cal.getTime())) {
-//                if (listTodos.get(i).getTime().getTime() < cal.getTime().getTime()) {
+//                if (listTodos.get(i).getTime().before(cal.getTime())) {
+                if (listTodos.get(i).getTime().getTime() > cal.getTime().getTime()) {
 
                     listTodos.get(i).setStatus(true);
                     try {
@@ -118,11 +137,19 @@ public class MainController implements Runnable {
 
     void updateTodoPane() {
         clearTodoPane();
+        String status = "";
         for (int i = 0; i < listTodos.size(); i++) {
             Todo todo = listTodos.get(i);
             Date tmp = listTodos.get(i).getTime();
             this.view.getTimePane().setText(this.view.getTimePane().getText() + "\n" + formatter.format(tmp));
-            this.view.getTodoPane().setText(this.view.getTodoPane().getText() + "\n" + todo.getTodo() + " (" + todo.isStatus() + ")");
+            if (todo.isStatus() == true){
+                status = "sudah";
+            } else {
+                status = "belum";
+            }
+            this.view.getTodoPane().setText(this.view.getTodoPane().getText() 
+                    + "\n" + todo.getTodo() + " (" 
+                    + status + ")");
         }
     }
 
