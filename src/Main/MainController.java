@@ -98,8 +98,8 @@ public class MainController implements Runnable {
             view.getCounter().setText(formatter.format(cal.getTime()));
             System.out.println(cal.getTime());
             for (int i = 0; i < listTodos.size(); i++) {
-                if (listTodos.get(i).getTime().after(cal.getTime())) {
-                    System.out.println("MASOK!");
+                if (compareTime(listTodos.get(i).getTime(), cal.getTime())) {
+
                     if (!listTodos.get(i).isStatus()) {
                         JOptionPane.showMessageDialog(this.view, "Waktu Mengerjakan -" + listTodos.get(i).todo + ", Telah Habis");
                         listTodos.get(i).setStatus(true);
@@ -110,7 +110,7 @@ public class MainController implements Runnable {
                             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    
+
                 }
             }
 
@@ -120,6 +120,22 @@ public class MainController implements Runnable {
                 Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private boolean compareTime(Date todoTime, Date clock) {
+        boolean tmp = false;
+        int jamTodo = Integer.parseInt(todoTime.toString().substring(11, 13));
+        int jamClock = Integer.parseInt(clock.toString().substring(11, 13));
+        if (jamTodo <= jamClock) {
+
+            if (Integer.parseInt(todoTime.toString().substring(14, 16)) <= Integer.parseInt(clock.toString().substring(14, 16))) {
+                if (Integer.parseInt(todoTime.toString().substring(17, 19)) <= Integer.parseInt(clock.toString().substring(17, 19))) {
+                    tmp = true;
+                }
+            }
+        }
+
+        return tmp;
     }
 
     public static String getTime(Calendar cal) {
